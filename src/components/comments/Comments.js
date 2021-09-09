@@ -8,18 +8,19 @@ import { commentsActions } from "../../store/comments-slice";
 import { fetchComments } from '../../store/comments-actions';
 
 const Comments = (props) => {
+  const { quoteId } = props;
   const [isAddingComment, setIsAddingComment] = useState(false);
   const comments = useSelector((state) => state.comments.comments);
   const isLoading = useSelector((state) => state.comments.isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchComments(props.quoteId))
+    dispatch(fetchComments(quoteId))
     return () => {
       dispatch(commentsActions.clearComments());
       dispatch(commentsActions.setLoadingStart());
     }
-  }, [dispatch]);
+  }, [dispatch, quoteId]);
 
   const startAddCommentHandler = () => {
     setIsAddingComment(true);
